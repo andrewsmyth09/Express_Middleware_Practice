@@ -1,16 +1,28 @@
 // 1. Import the users array from data.json
 // 2. Create and export a function
 // 3. Provide the three parameters that middleware can utilize
-// 4-a. Create a conditional checking if the users array INCLUDES our request query
-//     4-b. If true, call the next middleware in the stack
-//     4-c. If false, REDIRECT the response to the forbidden route
+// 4-a. Check if the request object has a query named username
+//     4-b. If not, redirect the response to the forbidden route
+// 5-a. Check if the username query is equal to any of the users' name properties
+//     HINT: toLowerCase()
+//     5-b. If it does, create a currentUser property on the request object
+//          and set it equal to the user's name value, then call the next
+//          middleware function in the stack
+//     5-c. If it does not, set the response's status to 401 and
+//          send a string asking for a username.
 
 const { users } = require("./data.json");
 
 exports.authUser = (req, res, next) => {
-  if (users.includes(req.query.username)) {
+  if (!req.query.username) res.redirect("/forbidden");
+
+  const username = req.query.username.toLowerCase();
+  const match = users.find((user) => user.name.toLowerCase() === username);
+
+  if (match) {
+    req.currentUser = match.name;
     next();
   } else {
-    res.redirect("/forbidden");
+    res.status(401).send("<h1>Please provide a username!</h1>");
   }
 };

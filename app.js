@@ -14,7 +14,7 @@ app.get("/", (req, res, next) => {
 });
 
 app.get("/settings", authUser, (req, res, next) => {
-  res.send("<h1>⚙️ Welcome to your settings page! ⚙️</h1>");
+  res.send(`<h1>⚙️ Welcome to your settings page ${req.currentUser}! ⚙️</h1>`);
 });
 
 app.get("/secret", authUser, (req, res, next) => {
