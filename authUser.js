@@ -10,19 +10,3 @@
 //          middleware function in the stack
 //     5-c. If it does not, set the response's status to 401 and
 //          send a string asking for a username.
-
-const { users } = require("./data.json");
-
-exports.authUser = (req, res, next) => {
-  if (!req.query.username) res.redirect("/forbidden");
-
-  const username = req.query.username.toLowerCase();
-  const match = users.find((user) => user.name.toLowerCase() === username);
-
-  if (match) {
-    req.currentUser = match.name;
-    next();
-  } else {
-    res.status(401).send("<h1>Please provide a username!</h1>");
-  }
-};

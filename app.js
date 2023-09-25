@@ -7,17 +7,15 @@ const app = express();
 // Example URL to test with
 // http://localhost:3000/secret?username=Brian
 
-const { authUser } = require("./authUser");
-
 app.get("/", (req, res, next) => {
   res.send("<h1>🎉 Welcome to the home page! 🎉</h1>");
 });
 
-app.get("/settings", authUser, (req, res, next) => {
+app.get("/settings", (req, res, next) => {
   res.send(`<h1>⚙️ Welcome to your settings page ${req.currentUser}! ⚙️</h1>`);
 });
 
-app.get("/secret", authUser, (req, res, next) => {
+app.get("/secret", (req, res, next) => {
   res.send("<h1>🤫 Shhh... it's a secret! 🤫</h1>");
 });
 
