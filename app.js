@@ -1,4 +1,6 @@
-const express = require("express");
+const express = require('express');
+const authUser = require('./authUser');
+
 const app = express();
 
 // 5. Import your function from authUser.js
